@@ -1,0 +1,37 @@
+version: '3.5'
+services:
+  timescale-server:
+    build:
+      dockerfile: dockerfiles/Dockerfile
+      context: .
+      shm_size: '1g'
+    image: 127.0.0.1:5000/timescale-server:latest
+    shm_size: '1g'
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=sematics
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - timescaledbnet
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      #placement:
+      #constraints: [node.role == worker]
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 15
+        window: 120s
+networks:
+  timescaledbnet:
+volumes:
+  postgres-data:
