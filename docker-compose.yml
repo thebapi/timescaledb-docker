@@ -35,3 +35,4 @@ networks:
   timescaledbnet:
 volumes:
   postgres-data:
+

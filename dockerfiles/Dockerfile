@@ -1,4 +1,4 @@
-FROM timescale/timescaledb:2.0.0-pg12
+FROM timescale/timescaledb:2.4.1-pg12
 MAINTAINER Sajib Sarkar <thebapi@gmail.com>
 
 # Copy postgres config file into container
